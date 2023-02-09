@@ -3,6 +3,7 @@ const app = express();
 const PORT = 3000;
 const bodyParser = require('body-parser');
 const authRouter = require('./routes/auth-router');
+const productsRouter = require('./routes/products-router');
 const loggingMiddleware = require('./middleware/logger');
 
 app.use(loggingMiddleware);
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', authRouter);
+app.use('/products', productsRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on PORT ${PORT}`);

@@ -6,7 +6,7 @@ AWS.config.update({
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-function addToCart(product, username){
+function addToCart(product_id, username){
     const params = {
         TableName: 'carts',
         Key: {
@@ -17,13 +17,13 @@ function addToCart(product, username){
             '#p': "products"
         },
         ExpressionAttributeValues: 
-        {':val': [product]}
+        {':val': [product_id]}
     }
 
     return docClient.update(params).promise();
 }
 
-function removeFromCart(product, username){
+function removeFromCart(product_id, username){
 }
 
 function getGrandTotal(){

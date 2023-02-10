@@ -8,6 +8,7 @@ aws.config.update({
 
 const docClient = new aws.DynamoDB.DocumentClient();
 
+// get a user given a username from DynamoDB
 const getUserByUsername = (username) => {
   const params = {
     TableName: table,

@@ -2,6 +2,7 @@ const express = require('express');
 const { showProducts } = require('../service/product-service');
 const router = express.Router();
 
+// route to show the list of all products
 router.get('/', async (req, res) => {
   try {
     const data = await showProducts();

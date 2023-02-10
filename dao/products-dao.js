@@ -8,6 +8,7 @@ aws.config.update({
 
 const docClient = new aws.DynamoDB.DocumentClient();
 
+// get all products from DynamoDB
 const getAllProducts = () => {
   const params = {
     TableName: table,

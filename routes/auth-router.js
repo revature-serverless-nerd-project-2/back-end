@@ -3,6 +3,7 @@ const router = express.Router();
 const { login } = require('../service/auth-service');
 const { createJWT } = require('../util/jwt-util');
 
+// route for logging in
 router.post('/login', async (req, res) => {
   try {
     const user = await login(req.body.username, req.body.password);

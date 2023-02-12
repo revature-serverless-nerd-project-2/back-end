@@ -23,7 +23,7 @@ router.get('/:id', async (req, res) => {
     const product = await showProduct(req.params.id);
     res.status(200).json(product);
   } catch (error) {
-    if (error.name === 'InvalidUsernameError') {
+    if (error.name === 'InvalidProductError') {
       res.statusCode = 404;
     } else {
       res.statusCode = 500;

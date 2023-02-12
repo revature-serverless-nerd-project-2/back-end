@@ -31,3 +31,5 @@ router.patch('/newitems', async (req, res) => {
         res.send('SERVER ERROR');
     }
 })
+
+module.exports = router;

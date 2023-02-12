@@ -1,5 +1,6 @@
-const { getAllProducts } = require('../dao/products-dao');
+const { getAllProducts, getProductById } = require('../dao/products-dao');
 const NoProductsError = require('../errors/no-products-error');
+const InvalidUsernameError = require('../errors/invalid-username-error');
 
 // function to get the products from the database and pass it to the response
 async function showProducts() {
@@ -13,6 +14,18 @@ async function showProducts() {
   return products;
 }
 
+async function showProduct(id) {
+  const data = await getProductById(id);
+  const product = data.Item;
+
+  if (!product) {
+    throw new InvalidUsernameError(`No user with username ${username} exists`);
+  }
+
+  return product;
+}
+
 module.exports = {
   showProducts,
+  showProduct,
 };

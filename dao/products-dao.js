@@ -23,6 +23,19 @@ const getAllProducts = () => {
   return items;
 };
 
+// get product by id
+const getProductById = (id) => {
+  const params = {
+    TableName: table,
+    Key: {
+      product_id: id,
+    },
+  };
+
+  return docClient.get(params).promise();
+};
+
 module.exports = {
   getAllProducts,
+  getProductById,
 };

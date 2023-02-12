@@ -1,4 +1,4 @@
-const { retrieveCart } = require('../dao/cart-dao');
+const { retrieveCart, addToCart } = require('../dao/cart-dao');
 
 async function showCart(username){
     const data = await retrieveCart(username);
@@ -7,6 +7,12 @@ async function showCart(username){
     return cart;
 }
 
+async function placeInCart(product_id, username){
+    const item = await addToCart(product_id, username);
+    return item;
+}
+
 module.exports = {
-    showCart
+    showCart,
+    placeInCart
 }

@@ -8,7 +8,7 @@ const productsRouter = require('./routes/products-router');
 const registerRouter = require('./routes/register-routes');
 const loggingMiddleware = require('./middleware/logger');
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 
 app.use(loggingMiddleware);
 app.use(bodyParser.json());

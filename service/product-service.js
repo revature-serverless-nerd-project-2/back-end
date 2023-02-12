@@ -1,6 +1,7 @@
 const { getAllProducts, getProductById } = require('../dao/products-dao');
 const NoProductsError = require('../errors/no-products-error');
 const InvalidUsernameError = require('../errors/invalid-username-error');
+const InvalidProductError = require('../errors/invalid-product-error');
 
 // function to get the products from the database and pass it to the response
 async function showProducts() {
@@ -19,7 +20,7 @@ async function showProduct(id) {
   const product = data.Item;
 
   if (!product) {
-    throw new InvalidUsernameError(`No user with username ${username} exists`);
+    throw new InvalidProductError('This product does not exist');
   }
 
   return product;

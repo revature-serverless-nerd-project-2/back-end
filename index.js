@@ -1,19 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const ordersRouter = require('./ROUTES/orders-routes');
-const usersRouter = require('./ROUTES/users-routes');
-const cartRouter = require('./ROUTES/cart-routes')
+
+const cors = require('cors');
 
 
-const PORT = 3000;
+const PORT = 8080;
 const app = express();
+app.use(cors({
+    origin : 'http://localhost:3001'
+}));
 
 app.use(bodyParser.json());
 app.use(ordersRouter);
-app.use(usersRouter);
-app.use(cartRouter);
-
-
 
 
 app.listen(PORT, () => {

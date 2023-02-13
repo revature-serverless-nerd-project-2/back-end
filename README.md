@@ -13,11 +13,11 @@ Create the Orders, carts, Products and Users table in DynamoBD.
 
 ## Checkout Endpoint
 Request
--HTTP Method 
+ -HTTP Method 
   - POST 
--URL 
+ -URL 
   - /checkout 
--Headers 
+ -Headers 
   - Content-Type: application/json 
   - Authorization : token
 

@@ -23,9 +23,17 @@ function addOrders (timestamp, order_summary) {
 
 }
 
+function retrieveOrders () {
+    const params = {
+        TableName : 'Orders'
+    }
+    return docClient.scan(params).promise();
+}
+
 
 
 module.exports = {
-    addOrders
+    addOrders,
+    retrieveOrders
    
 }

@@ -1,10 +1,12 @@
-const { showProducts } = require('../service/product-service');
-const { getAllProducts } = require('../dao/products-dao');
+const { showProducts, showProduct } = require('../service/product-service');
+const { getAllProducts, getProductById } = require('../dao/products-dao');
 const NoProductsError = require('../errors/no-products-error');
+const InvalidProductError = require('../errors/invalid-product-error');
 
 jest.mock('../dao/products-dao', function () {
   return {
     getAllProducts: jest.fn(),
+    getProductById: jest.fn(),
   };
 });
 
@@ -60,5 +62,40 @@ describe('Products view tests', () => {
         product_id: '12346',
       },
     ]);
+  });
+});
+
+describe('Singe product view', () => {
+  test('Product does not exist', async () => {
+    getProductById.mockReturnValueOnce(Promise.resolve({}));
+
+    await expect(showProduct('123')).rejects.toThrow(InvalidProductError);
+  });
+
+  test('Product exists', async () => {
+    getProductById.mockReturnValueOnce(
+      Promise.resolve({
+        Item: {
+          quantity: 4,
+          imageUrl: '61GELFs1J8L._AC_SX466_.jpg',
+          description:
+            'Microsoft Surface Laptop Go 12.4" Touchscreen Laptop PC, Intel Quad-Core i5-1035G1, 4GB RAM, 64GB eMMC, Webcam, Win 10 Pro, Bluetooth, Online Class Ready - Platinum',
+          price: 260.95,
+          name: 'Microsoft Surface Laptop Go 12.4"',
+          product_id: '12345',
+        },
+      })
+    );
+
+    const product = await showProduct('12345');
+    expect(product).toMatchObject({
+      quantity: 4,
+      imageUrl: '61GELFs1J8L._AC_SX466_.jpg',
+      description:
+        'Microsoft Surface Laptop Go 12.4" Touchscreen Laptop PC, Intel Quad-Core i5-1035G1, 4GB RAM, 64GB eMMC, Webcam, Win 10 Pro, Bluetooth, Online Class Ready - Platinum',
+      price: 260.95,
+      name: 'Microsoft Surface Laptop Go 12.4"',
+      product_id: '12345',
+    });
   });
 });

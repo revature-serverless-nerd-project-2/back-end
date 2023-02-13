@@ -6,9 +6,11 @@ const bodyParser = require('body-parser');
 const authRouter = require('./routes/auth-router');
 const productsRouter = require('./routes/products-router');
 const cartRouter = require('./routes/cart-router');
+const registerRouter = require('./routes/register-router');
+const orderHistoryRouter = require('./routes/previous-orders-router');
 const loggingMiddleware = require('./middleware/logger');
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
 
 app.use(loggingMiddleware);
 app.use(bodyParser.json());
@@ -21,6 +23,8 @@ app.use('/', authRouter);
 app.use('/products', productsRouter);
 app.use('/carts', cartRouter);
 app.use('/newitems', cartRouter);
+app.use('/register', registerRouter);
+app.use('/orders', orderHistoryRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on PORT ${PORT}`);

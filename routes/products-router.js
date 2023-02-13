@@ -3,7 +3,7 @@ const { getFileStream } = require('../s3/products-s3');
 const { showProducts, showProduct } = require('../service/product-service');
 const router = express.Router();
 
-// route to show the list of all products
+// route to get the list of all products
 router.get('/', async (req, res) => {
   try {
     const data = await showProducts();
@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+// route to get a single product given the id
 router.get('/:id', async (req, res) => {
   try {
     const product = await showProduct(req.params.id);
@@ -32,6 +33,7 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// route to get the image of a product given the key of the image
 router.get('/image/:key', (req, res) => {
   const key = req.params.key;
   const readStream = getFileStream(key);

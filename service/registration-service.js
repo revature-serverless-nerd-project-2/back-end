@@ -25,7 +25,7 @@ async function register(username, password, confirmPassword, name, address) {
         throw new NoInputError("Address must not be left empty");
     }
 
-    if(password !== confirmPassword) {
+    if(password != confirmPassword) {
         throw new PasswordMatchingError("Passwords do not match");
     }
 

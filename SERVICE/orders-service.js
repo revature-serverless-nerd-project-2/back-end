@@ -1,7 +1,7 @@
-const {createJWT, verifyTokenAndReturnPayload} = require('../UTILITIES/jwt');
+const {createJWT, verifyTokenAndPayload} = require('../util/jwt-util');
 const {addOrders} = require('../DAO/orders.js');
-const {retrieveCartItemsByUsername, retrieveCartItems} = require('../DAO/cart');
-const {deleteProductByID} = require('../DAO/products');
+const {retrieveCartItemsByUsername, retrieveCartItems} = require('../dao/cart-dao');
+const {deleteProductByID} = require('../dao/products-dao');
 const NoCartItemsToCheckoutError = require('../ERRORS/no-items-to-checkout-error');
 const uuid = require('uuid');
 

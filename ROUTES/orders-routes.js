@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {checkout} = require('../SERVICE/orders-service')
-const {createJWT, verifyTokenAndReturnPayload} = require('../UTILITIES/jwt');
-const {deleteProductByID} = require('../DAO/products');
+const {createJWT, verifyTokenAndPayload} = require('../util/jwt-util');
+const {deleteProductByID} = require('../DAO/products-dao');
 
 router.post('/orders', async(req, res) => {
     try {

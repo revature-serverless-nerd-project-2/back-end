@@ -1,22 +1,34 @@
-const express = require('express');
+const app = express();
+const cors = require('cors');
+const PORT = 8080;
 const bodyParser = require('body-parser');
 const ordersRouter = require('./ROUTES/orders-routes');
-const usersRouter = require('./ROUTES/users-routes');
 const cartRouter = require('./ROUTES/cart-routes')
+const authRouter = require('./routes/auth-router');
+const productsRouter = require('./routes/products-router');
+const cartRouter = require('./routes/cart-router');
+const registerRouter = require('./routes/register-router');
+const orderHistoryRouter = require('./routes/previous-orders-router');
+const loggingMiddleware = require('./middleware/logger');
 
+app.use(cors({ origin: '*' }));
 
-const PORT = 3000;
-const app = express();
-
+app.use(loggingMiddleware);
 app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome!' });
+});
+
 app.use(ordersRouter);
-app.use(usersRouter);
 app.use(cartRouter);
-
-
-
+app.use('/', authRouter);
+app.use('/products', productsRouter);
+app.use('/carts', cartRouter);
+app.use('/newitems', cartRouter);
+app.use('/register', registerRouter);
+app.use('/orders', orderHistoryRouter);
 
 app.listen(PORT, () => {
-    console.log(`Listening on ${PORT}`);
-    }
-) 
+  console.log(`Listening on PORT ${PORT}`);
+});

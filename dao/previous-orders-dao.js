@@ -9,11 +9,15 @@ const documentClient = new aws.DynamoDB.DocumentClient();
 function getPreviousOrders(username)  {
     const params = {
         TableName: 'Orders',
-        Key: {
-            "order_id": username
+        KeyConditionExpression: "#o = :val",
+        ExpressionAttributeNames: {
+            "#o": "order_id"
+        },
+        ExpressionAttributeValues: {
+            ":val": username
         }
     }
-    return documentClient.get(params).promise();
+    return documentClient.query(params).promise();
 }
 
 module.exports = {

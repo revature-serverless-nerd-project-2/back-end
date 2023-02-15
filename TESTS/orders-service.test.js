@@ -3,7 +3,7 @@ const {retrieveCartItems} = require('../DAO/cart');
 const {addOrders} = require('../DAO/orders');
 const NoCartItemsToCheckoutError = require('../ERRORS/no-items-to-checkout-error');
 
-jest.mock('../DAO/cart.js', function() {
+jest.mock('../DAO/cart-dao.js', function() {
     return {
         retrieveCartItems: jest.fn(),
        

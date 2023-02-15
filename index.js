@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 const cors = require('cors');
 const PORT = 8080;
 const bodyParser = require('body-parser');
-const ordersRouter = require('./ROUTES/orders-routes')
+const ordersRouter = require('./ROUTES/orders-routes');
 const authRouter = require('./routes/auth-router');
 const productsRouter = require('./routes/products-router');
 const cartRouter = require('./routes/cart-router');

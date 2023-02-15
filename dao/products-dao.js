@@ -3,7 +3,7 @@ const aws = require('aws-sdk');
 const table = 'Products';
 
 aws.config.update({
-  region: 'us-east-2',
+  region: process.env.AWS_DEFAULT_REGION,
 });
 
 const docClient = new aws.DynamoDB.DocumentClient();

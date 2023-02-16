@@ -1,8 +1,8 @@
 const {createJWT, verifyTokenAndPayload} = require('../util/jwt-util');
-const {addOrders} = require('../DAO/orders.js');
-const {retrieveCartItemsByUsername, retrieveCartItems} = require('../dao/cart-dao');
+const {addOrders} = require('../dao/orders.js');
+const {retrieveCart} = require('../dao/cart-dao');
 const {deleteProductByID} = require('../dao/products-dao');
-const NoCartItemsToCheckoutError = require('../ERRORS/no-items-to-checkout-error');
+const NoCartItemsToCheckoutError = require('../errors/no-items-to-checkout-error');
 const uuid = require('uuid');
 
 const timestamp = require('unix-timestamp');
@@ -10,8 +10,8 @@ timestamp.round = true
 
 async function checkout(username) {
     
-    const data = await retrieveCartItems();
-   const userItems = data.Items.product;
+    const data = await retrieveCart(username);
+   const userItems = data.Item;
    
    if(!userItems){
        
@@ -20,7 +20,7 @@ async function checkout(username) {
       
 }
 
-        await addOrders(timestamp.now(), userItems);
+        await addOrders(username, timestamp.now(), userItems);
     
 
 }

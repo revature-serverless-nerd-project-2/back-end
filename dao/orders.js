@@ -7,11 +7,11 @@ AWS.config.update({
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-function addOrders (timestamp, order_summary) {
+function addOrders (order_id, timestamp, order_summary) {
     const params = {
         TableName : 'Orders',
         Item : {
-            "order_id" : uuid.v4(),
+            order_id,
             timestamp,
             order_summary
             

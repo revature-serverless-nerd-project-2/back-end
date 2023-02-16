@@ -6,18 +6,24 @@ AWS.config.update({
 
 const docClient = new AWS.DynamoDB.DocumentClient();
 
-function addToCart(product_id, username){
+function addToCart(product_id, description, imageURL, name, price, username){
     const params = {
         TableName: 'carts',
         Key: {
             username
         },
-        UpdateExpression: 'SET #p = list_append(#p, :val)',
+        UpdateExpression: 'SET #p = list_append(#p, :vals)',
         ExpressionAttributeNames: {
             '#p': "products"
         },
         ExpressionAttributeValues: 
-        {':val': [product_id]}
+        {':vals': [{
+            product_id,
+            description,
+            imageURL,
+            name,
+            price
+        }]}
     }
 
     return docClient.update(params).promise();

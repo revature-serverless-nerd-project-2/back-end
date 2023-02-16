@@ -17,7 +17,7 @@ router.get('/carts', async (req, res)  => {
 
 router.patch('/newitems', async (req, res) => {
     try{
-        const item = await placeInCart(req.body.product_id);
+        const item = await placeInCart(req.body.product_id, req.body.description, req.body.imageURL, req.body.name, req.body.price, req.body.username);
         if(item){
             res.status(200);
             res.send(data);

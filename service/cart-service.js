@@ -10,8 +10,8 @@ async function showCart(username){
     }
 }
 
-async function placeInCart(product_id, username){
-    const item = await addToCart(product_id, username);
+async function placeInCart(product_id, description, imageURL, name, price, username){
+    const item = await addToCart(product_id, description, imageURL, name, price, username);
     return item;
 }
 

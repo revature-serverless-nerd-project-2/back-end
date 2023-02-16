@@ -1,14 +1,15 @@
 const express = require('express');
-const router = express.Router();
-const {checkout} = require('../SERVICE/orders-service')
+const router = require('./auth-router');
+const ordersRouter = express.Router();
+const {checkout} = require('../service/orders-service')
 const {createJWT, verifyTokenAndPayload} = require('../util/jwt-util');
-const {deleteProductByID} = require('../DAO/products-dao');
+const {deleteProductByID} = require('../dao/products-dao');
 
 router.post('/orders', async(req, res) => {
     try {
-        const token = req.headers.authorization.split(' ')[1];
-        const payload = await verifyTokenAndReturnPayload(token);
-        await checkout(payload.username);
+        // const token = req.headers.authorization.split(' ')[1];
+        // const payload = await verifyTokenAndReturnPayload(token);
+        await checkout(req.body.username);
        
         res.statusCode = 201;
                 return res.send({

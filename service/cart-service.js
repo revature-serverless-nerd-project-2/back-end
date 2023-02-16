@@ -2,7 +2,7 @@ const { retrieveCart, addToCart } = require('../dao/cart-dao');
 
 async function showCart(username){
     const data = await retrieveCart(username);
-    const cart = data.Items;
+    const cart = data.Item;
 
     return cart;
 }

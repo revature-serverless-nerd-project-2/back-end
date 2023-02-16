@@ -4,7 +4,7 @@ require('dotenv').config();
 const cors = require('cors');
 const PORT = 8080;
 const bodyParser = require('body-parser');
-const ordersRouter = require('./ROUTES/orders-routes');
+const ordersRouter = require('./routes/orders-routes');
 const authRouter = require('./routes/auth-router');
 const productsRouter = require('./routes/products-router');
 const cartRouter = require('./routes/cart-router');
@@ -21,14 +21,13 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome!' });
 });
 
-app.use(ordersRouter);
-app.use(cartRouter);
 app.use('/', authRouter);
 app.use('/products', productsRouter);
 app.use('/carts', cartRouter);
 app.use('/newitems', cartRouter);
 app.use('/register', registerRouter);
 app.use('/orders', orderHistoryRouter);
+app.use('/orders', ordersRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on PORT ${PORT}`);

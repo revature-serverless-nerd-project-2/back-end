@@ -7,12 +7,8 @@ const router = require('./auth-router');
 router.get('/carts', async (req, res)  => {
     try{
         const data = await showCart(req.body.username);
-        if(data != ''){
-            res.status(200);
-            res.send(data);
-        } else{
-            res.send('Empty Cart');
-        }
+        res.status(200);
+        res.send(data);
     } catch(error){
         res.status(500);
         res.send('SERVER ERROR');

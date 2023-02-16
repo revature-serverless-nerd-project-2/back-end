@@ -3,8 +3,11 @@ const { retrieveCart, addToCart } = require('../dao/cart-dao');
 async function showCart(username){
     const data = await retrieveCart(username);
     const cart = data.Items;
-
-    return cart;
+    if(cart.length == 0){
+        return ('Empty Cart');
+    } else {
+        return cart;
+    }
 }
 
 async function placeInCart(product_id, username){

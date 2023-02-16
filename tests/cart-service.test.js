@@ -16,6 +16,13 @@ describe('Testing cart functions', () => {
         expect(cart).toStrictEqual(['product1', 'productid2', 'product3']);
     });
 
+    test('An empty cart should return a message about an empty cart', async () => {
+        retrieveCart.mockReturnValueOnce(Promise.resolve({Items: []}));
+
+        const emptyCart = await showCart('testuser');
+        expect(emptyCart).toStrictEqual('Empty Cart');
+    })
+
     test('An item should be added to the cart when the addToCart function is called', async () => {
         addToCart.mockReturnValueOnce(Promise.resolve('product123'));
 

@@ -1,4 +1,5 @@
 const aws = require('aws-sdk');
+const uuid = require('uuid');
 
 const table = 'Products';
 
@@ -35,7 +36,26 @@ const getProductById = (id) => {
   return docClient.get(params).promise();
 };
 
+// add products
+
+const addProduct = (desc, imageUrl, name, price, quantity) => {
+  const params = {
+    TableName: table,
+    Item: {
+      product_id: uuid.v4(),
+      description: desc,
+      imageUrl,
+      name,
+      price,
+      quantity,
+    },
+  };
+
+  return docClient.put(params).promise();
+};
+
 module.exports = {
   getAllProducts,
   getProductById,
+  addProduct,
 };

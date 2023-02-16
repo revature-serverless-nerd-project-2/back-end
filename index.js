@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 const cors = require('cors');
 const PORT = 8080;
 const bodyParser = require('body-parser');
+const ordersRouter = require('./routes/orders-routes');
 const authRouter = require('./routes/auth-router');
 const productsRouter = require('./routes/products-router');
 const cartRouter = require('./routes/cart-router');
@@ -25,6 +27,7 @@ app.use('/carts', cartRouter);
 app.use('/newitems', cartRouter);
 app.use('/register', registerRouter);
 app.use('/orders', orderHistoryRouter);
+app.use('/orders', ordersRouter);
 
 app.listen(PORT, () => {
   console.log(`Listening on PORT ${PORT}`);

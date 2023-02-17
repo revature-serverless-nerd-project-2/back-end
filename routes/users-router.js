@@ -4,7 +4,7 @@ const users_service = require('../SERVICE/users-service');
 const { verifyTokenAndPayload } = require('../util/jwt-util');
 
 // Redundant to use the same lines of code
-const getUsername = function(req) {
+const getUsernameFromToken = function(req) {
     const header = req.headers.authorization;
     const token = header.split(' ')[1];
     const tokenPayload = verifyTokenAndPayload(token);
@@ -15,7 +15,7 @@ const getUsername = function(req) {
 // Create GET /profile endpoint using JSON web token to get username
 router.get('/', async (req, res) => {
     try {
-        const username = await getUsername(req);
+        const username = await getUsernameFromToken(req);
         const data = users_service.showUser(username);
         res.status(200).json(data);
     } catch (err) {
@@ -29,8 +29,10 @@ router.get('/', async (req, res) => {
 // Create PATCH /profile name
 router.patch('/:name', async (req, res) => {
     try {
-        const data = await getUsername(req)
+        const data = await getUsernameFromToken(req);
         const newName = req.body.name;
+        const name = await users_service.editName(data, newName);
+        res.status(200).json(name);
     } catch (err) {
         if (err.name === "NoInputError") {
             res.statusCode = 400
@@ -39,10 +41,27 @@ router.patch('/:name', async (req, res) => {
         }
         res.json(err);
     }
-})
+});
 
 
 // Create PATCH /profile address
+router.patch('/:address', async (req, res) => {
+    try {
+        const data = await getUsernameFromToken(req);
+        const newAddress = req.body.address;
+        const address = await users_service.editAddress(data, newAddress);
+        res.status(200).json(address)
+    } catch (err) {
+        if (err.name === "NoInputError") {
+            res.statusCode = 400
+        } else {
+            res.statusCode = 500
+        }
+
+        res.json(err);
+    }
+})
+
 // ^ Check if req.body.name or req.body.address
 // If neither, throw error
 

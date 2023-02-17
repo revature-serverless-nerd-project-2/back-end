@@ -37,8 +37,7 @@ const getProductById = (id) => {
 };
 
 // add products
-
-const addProduct = (desc, imageUrl, name, price, quantity) => {
+const putProduct = (desc, imageUrl, name, price, quantity) => {
   const params = {
     TableName: table,
     Item: {
@@ -57,5 +56,5 @@ const addProduct = (desc, imageUrl, name, price, quantity) => {
 module.exports = {
   getAllProducts,
   getProductById,
-  addProduct,
+  putProduct,
 };

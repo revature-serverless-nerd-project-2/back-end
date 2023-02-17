@@ -38,7 +38,7 @@ async function addProduct(file, desc, name, price, quantity) {
   await s3Upload(file);
   await putProduct(desc, file.originalname, name, Number(price), Number(quantity));
 
-  return 'Succesfully Added Product';
+  //return 'Succesfully Added Product';
 }
 
 module.exports = {

@@ -20,7 +20,7 @@ const getUserByUsername = (username) => {
   return docClient.get(params).promise();
 };
 
-// Update user's name
+// Update user's address
 const updateAddress = (username, address) => {
   const params = {
     TableName: table,
@@ -39,6 +39,7 @@ const updateAddress = (username, address) => {
   return docClient.update(params).promise();
 }
 
+// Update user's name
 const updateName = (username, newName) => {
   const params = {
     TableName: table,

@@ -26,7 +26,7 @@ app.use('/products', productsRouter);
 app.use('/carts', cartRouter);
 app.use('/newitems', cartRouter);
 app.use('/register', registerRouter);
-app.use('/orders', orderHistoryRouter);
+app.use('/previous-orders', orderHistoryRouter);
 app.use('/orders', ordersRouter);
 
 app.listen(PORT, () => {

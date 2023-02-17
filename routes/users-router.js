@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const users_service = require('../SERVICE/users-service');
+
+// '/profile' will use JWT to show the user's own profile
 const { verifyTokenAndPayload } = require('../util/jwt-util');
 
 // Redundant to use the same lines of code
@@ -61,8 +63,5 @@ router.patch('/:address', async (req, res) => {
         res.json(err);
     }
 })
-
-// ^ Check if req.body.name or req.body.address
-// If neither, throw error
 
 module.exports = router;

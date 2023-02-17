@@ -1,6 +1,8 @@
-const { getAllProducts, getProductById } = require('../dao/products-dao');
+const { getAllProducts, getProductById, putProduct } = require('../dao/products-dao');
+const { s3Upload } = require('../s3/products-s3');
 const NoProductsError = require('../errors/no-products-error');
 const InvalidProductError = require('../errors/invalid-product-error');
+const InvalidProductInfoError = require('../errors/invalid-product-info-error');
 
 // function to get the products from the database and pass it to the response
 async function showProducts() {
@@ -27,7 +29,20 @@ async function showProduct(id) {
   return product;
 }
 
+// add product
+async function addProduct(file, desc, name, price, quantity) {
+  if (!file || desc.length < 5 || name < 2 || price <= 0 || quantity < 0) {
+    throw new InvalidProductInfoError('Please provide valid details about this product');
+  }
+
+  await s3Upload(file);
+  await putProduct(desc, file.originalname, name, Number(price), Number(quantity));
+
+  return 'Succesfully Added Product';
+}
+
 module.exports = {
   showProducts,
   showProduct,
+  addProduct,
 };

@@ -1,0 +1,15 @@
+version: 0.0
+os: linux
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_containers.sh
+      timeout: 300
+      runas: root
+  BeforeInstall:
+    - location: scripts/pull_docker_image.sh
+      timeout: 300
+      runas: root
+  ApplicationStart:
+    - location: scripts/start_docker_container.sh
+      timeout: 300
+      runas: root

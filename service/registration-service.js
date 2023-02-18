@@ -8,8 +8,8 @@ const { getUserByUsername } = require('../DAO/users-dao');
 const NoInputError = require('../errors/no-input-error');
 
 async function register(username, password, confirmPassword, name, address) {
-  if (username.length < 6 || password.length < 6) {
-    throw new LengthValidationError('Username and Password must be at least 6 characters');
+  if (username.length < 5 || password.length < 5) {
+    throw new LengthValidationError('Username and Password must be at least 5 characters');
   }
 
   let data = await getUserByUsername(username);

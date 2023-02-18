@@ -35,7 +35,19 @@ const getProductById = (id) => {
   return docClient.get(params).promise();
 };
 
+// const deleteProductByID = (id) => {
+//   const params = {
+//     TableName: table,
+//     Key: {
+//       product_id: id,
+//     },
+//   };
+
+//   return docClient.delete(params).promise();
+// }
+
 module.exports = {
   getAllProducts,
-  getProductById,
+  getProductById
+  // deleteProductByID
 };

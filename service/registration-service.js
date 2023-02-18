@@ -1,10 +1,10 @@
 const LengthValidationError = require('../errors/length-validation-error');
 const UsernameExistsError = require('../errors/username-exists-error');
 const PasswordMatchingError = require('../errors/password-matching-error');
-const { addUser } = require('../DAO/registration-dao');
+const { addUser } = require('../dao/registration-dao');
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
-const { getUserByUsername } = require('../DAO/users-dao');
+const { getUserByUsername } = require('../dao/users-dao');
 const NoInputError = require('../errors/no-input-error');
 
 async function register(username, password, confirmPassword, name, address) {

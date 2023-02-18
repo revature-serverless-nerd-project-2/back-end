@@ -1,4 +1,4 @@
-const { getPreviousOrders } = require('../DAO/previous-orders-dao');
+const { getPreviousOrders } = require('../dao/previous-orders-dao');
 const NoOrdersError = require('../errors/no-orders-error');
 const { showProduct } = require('./product-service');
 
@@ -10,7 +10,6 @@ async function viewOrders(username) {
         throw new NoOrdersError('No previous orders for this account');
     }
 
-    
     const orderList = [];
     let result = Object(data.Items);
     for(let i = 0; i < result.length; i++){
@@ -29,5 +28,5 @@ async function viewOrders(username) {
 };
 
 module.exports = {
-    viewOrders
+  viewOrders,
 };

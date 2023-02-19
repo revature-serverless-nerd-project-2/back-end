@@ -37,10 +37,10 @@ const updateAddress = (username, address) => {
   }
 
   return docClient.update(params).promise();
-}
+};
 
 // Update user's name
-const updateName = (username, newName) => {
+const updateName = (username, name) => {
   const params = {
     TableName: table,
     UpdateExpression: "set #name = :name",
@@ -48,7 +48,7 @@ const updateName = (username, newName) => {
       "#name": "name"
     },
     ExpressionAttributeValues: {
-      ":name": newName
+      ":name": name
     },
     Key: {
       username

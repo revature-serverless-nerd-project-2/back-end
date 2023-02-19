@@ -76,7 +76,7 @@ module.exports = {
   getAllProducts,
   getProductById,
 
-  reduceInventory
+  reduceInventory,
 
   putProduct,
 

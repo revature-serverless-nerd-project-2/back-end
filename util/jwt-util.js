@@ -16,7 +16,7 @@ function createJWT(username, role) {
 
 function verifyTokenAndPayload(token) {
   jwt.verify = Promise.promisify(jwt.verify);
-  return jwt.verify(token, 'secretkey');
+  return jwt.verify(token, 'THisiSaSecrEtKey');
 }
 
 module.exports = {

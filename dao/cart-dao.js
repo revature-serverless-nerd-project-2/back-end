@@ -32,21 +32,6 @@ function addToCart(product_id, description, imageURL, name, price, username){
     return docClient.update(params).promise();
 }
 
-function removeFromCart(product_id, username){
-    const params = {
-        TableName: 'carts',
-        Key: {
-            username
-        },
-        UpdateExpression: `REMOVE #parent.#key`,
-        ExpressionAttributeNames: {
-            "#parent": 'products',
-            "#key": product_id
-        }
-    }
-    
-}
-
 function removeCart(username){
     const params = {
         TableName: 'carts',

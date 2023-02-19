@@ -1,6 +1,6 @@
 const express = require('express');
 const cartRouter = express.Router();
-const { showCart, placeInCart, removeUserCart} = require('../service/cart-service');
+const { showCart, placeInCart, removeUserCart } = require('../service/cart-service');
 const router = require('./auth-router');
 const { v4: uuidv4 } = require('uuid');
 
@@ -61,7 +61,7 @@ router.delete('/removals', async (req, res) => {
     const user = req.body.username;
 
     try{
-        const result = await removeUserCart(user);
+        await removeUserCart(user);
         res.status(200);
         res.send('User removed');
     } catch(error){

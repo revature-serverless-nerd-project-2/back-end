@@ -12,18 +12,21 @@ function addToCart(product_id, description, imageURL, name, price, username){
         Key: {
             username
         },
-        UpdateExpression: 'SET #p = list_append(#p, :vals)',
+        UpdateExpression: 'SET #p = list_append(if_not_exists(#p, :empty_list), :vals)',
         ExpressionAttributeNames: {
             '#p': "products"
         },
-        ExpressionAttributeValues: 
-        {':vals': [{
-            product_id,
-            description,
-            imageURL,
-            name,
-            price
-        }]}
+        ExpressionAttributeValues: {
+            ':vals': [{
+                product_id,
+                description,
+                imageURL,
+                name,
+                price
+            }],
+            ':empty_list': []
+        }
+        
     }
 
     return docClient.update(params).promise();
@@ -39,7 +42,7 @@ function retrieveCart(username){
     const params = {
         TableName: 'carts',
         Key: {
-            username
+            username: username
         }
     }
 

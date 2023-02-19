@@ -1,5 +1,10 @@
 const express = require('express');
+const { deleteProductByID } = require('../dao/products-dao');
 const { getFileStream } = require('../s3/products-s3');
+
+const { showProducts, showProduct } = require('../service/product-service');
+const router = express.Router();
+
 const { showProducts, showProduct, addProduct } = require('../service/product-service');
 const router = express.Router();
 const multer = require('multer');
@@ -18,6 +23,7 @@ const fileFilter = (req, file, cb) => {
 
 // upload the image to the memory
 const upload = multer({ storage, fileFilter });
+
 
 // route to get the list of all products
 router.get('/', async (req, res) => {
@@ -56,6 +62,8 @@ router.get('/image/:key', (req, res) => {
 
   readStream.pipe(res);
 });
+
+
 
 // route to add products
 router.post('/', upload.single('image'), async (req, res) => {

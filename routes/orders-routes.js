@@ -5,11 +5,22 @@ const {checkout} = require('../service/orders-service')
 const {createJWT, verifyTokenAndPayload} = require('../util/jwt-util');
 const {deleteProductByID} = require('../dao/products-dao');
 
+
 router.post('/orders', async(req, res) => {
     try {
         // const token = req.headers.authorization.split(' ')[1];
         // const payload = await verifyTokenAndReturnPayload(token);
-        await checkout(req.body.username);
+        const username = req.body.username;
+        const Firstname = req.body.Firstname;
+        const Lastname = req.body.Lastname;
+        const Email = req.body.Email;
+        const Address = req.body.Address;
+        const Address2 = req.body.Address2;
+        const City = req.body.City;
+        const State = req.body.State;
+        const Zip = req.body.Zip;
+
+        await checkout(username, Firstname, Lastname, Email, Address, Address2, City, State, Zip);
        
         res.statusCode = 201;
                 return res.send({
@@ -26,6 +37,7 @@ router.post('/orders', async(req, res) => {
         "message" : err
     })
     }
+
    
 })
 module.exports = router;

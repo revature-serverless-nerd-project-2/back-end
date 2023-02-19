@@ -1,6 +1,6 @@
 const express = require('express');
 const cartRouter = express.Router();
-const { showCart, placeInCart} = require('../service/cart-service');
+const { showCart, placeInCart, removeUserCart} = require('../service/cart-service');
 const router = require('./auth-router');
 const { v4: uuidv4 } = require('uuid');
 
@@ -9,12 +9,11 @@ router.get('/carts', async (req, res)  => {
     let user = req.query.username;
     try{
         if(!user){
-            user = uuidv4();
+            user = '0';
         }
         const data = await showCart(user);
         if(data.Item){ 
             const cart = data.Item.products;
-            console.log(data.user);
             if(cart){
                 res.status(200);
                 res.send(cart);
@@ -51,6 +50,20 @@ router.patch('/newitems', async (req, res) => {
             res.write(user);
             res.send(item.data);
         }
+    } catch(error){
+        console.log(error);
+        res.status(500);
+        res.send('SERVER ERROR');
+    }
+})
+
+router.delete('/removals', async (req, res) => {
+    const user = req.body.username;
+
+    try{
+        const result = await removeUserCart(user);
+        res.status(200);
+        res.send('User removed');
     } catch(error){
         console.log(error);
         res.status(500);

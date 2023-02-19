@@ -33,9 +33,29 @@ function addToCart(product_id, description, imageURL, name, price, username){
 }
 
 function removeFromCart(product_id, username){
+    const params = {
+        TableName: 'carts',
+        Key: {
+            username
+        },
+        UpdateExpression: `REMOVE #parent.#key`,
+        ExpressionAttributeNames: {
+            "#parent": 'products',
+            "#key": product_id
+        }
+    }
+    
 }
 
-function getGrandTotal(){
+function removeCart(username){
+    const params = {
+        TableName: 'carts',
+        Key: {
+            username
+        }
+    }
+
+    return docClient.delete(params).promise();
 }
 
 function retrieveCart(username){
@@ -52,6 +72,6 @@ function retrieveCart(username){
 module.exports = {
     addToCart,
     removeFromCart,
-    getGrandTotal,
+    removeCart,
     retrieveCart
 };

@@ -1,7 +1,7 @@
 const {createJWT, verifyTokenAndPayload} = require('../util/jwt-util');
 const {addOrders} = require('../dao/orders.js');
 const {retrieveCart} = require('../dao/cart-dao');
-const {deleteProductByID} = require('../dao/products-dao');
+const {getProductById, reduceInventory} = require('../dao/products-dao');
 const NoCartItemsToCheckoutError = require('../errors/no-items-to-checkout-error');
 const uuid = require('uuid');
 
@@ -10,9 +10,11 @@ timestamp.round = true
 
 async function checkout(username, Firstname, Lastname, Email, Address, Address2, City, State, Zip) {
     
-    const data = await retrieveCart(username);
-   const userItems = data.Item;
-//    const product_id = userItems.product_id;
+   const data = await retrieveCart(username);
+   const userItems = data.Item.products;
+   console.log(userItems)
+   
+   
    
    if(!userItems){
        
@@ -23,9 +25,19 @@ async function checkout(username, Firstname, Lastname, Email, Address, Address2,
 
     await addOrders(username, timestamp.now(), Firstname, Lastname, Email, Address, Address2, City, State, Zip, userItems);
 
-    // if(product_id) {
-    //     await deleteProductByID (product_id)
-    // }
+    const product_id = userItems[0].product_id;
+    console.log(product_id)
+    const prod_data = await getProductById(product_id);;
+    const prod_userItems = prod_data.Item;
+    const quantity = prod_userItems.quantity;
+    console.log(quantity);
+    console.log(prod_userItems.product_id)
+    if(product_id === prod_userItems.product_id){
+       
+       await reduceInventory(product_id, quantity-1);
+       console.log(quantity-1)
+
+    }
     
   
 }

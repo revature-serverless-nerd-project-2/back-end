@@ -1,7 +1,10 @@
 const express = require('express');
+const { deleteProductByID } = require('../dao/products-dao');
 const { getFileStream } = require('../s3/products-s3');
 const { showProducts, showProduct } = require('../service/product-service');
-const router = express.Router();
+// const router = express.Router();
+const router = require('./auth-router');
+const productsRouter = express.Router();
 
 // route to get the list of all products
 router.get('/', async (req, res) => {
@@ -40,5 +43,12 @@ router.get('/image/:key', (req, res) => {
 
   readStream.pipe(res);
 });
+
+router.delete('/products/:id', async(req, res) => {
+  await deleteProductByID(req.params.id);
+  res.send({
+    "message" : "Successfully deleted"
+  })
+})
 
 module.exports = router;

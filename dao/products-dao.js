@@ -35,19 +35,25 @@ const getProductById = (id) => {
   return docClient.get(params).promise();
 };
 
-// const deleteProductByID = (id) => {
-//   const params = {
-//     TableName: table,
-//     Key: {
-//       product_id: id,
-//     },
-//   };
+function reduceInventory(id, quantity){
+  const params = {
+      TableName: 'Products',
+      Key: {
+          product_id: id,
+      },
+      UpdateExpression: 'SET #q = :val',
+      ExpressionAttributeNames: {
+          '#q': "quantity"
+      },
+      ExpressionAttributeValues: 
+      {':val': quantity}
+  }
 
-//   return docClient.delete(params).promise();
-// }
+  return docClient.update(params).promise();
+}
 
 module.exports = {
   getAllProducts,
-  getProductById
-  // deleteProductByID
+  getProductById,
+  reduceInventory
 };

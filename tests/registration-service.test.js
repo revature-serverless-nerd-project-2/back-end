@@ -18,11 +18,11 @@ jest.mock('../DAO/users-dao', function() {
 });
 
 describe('Registration Tests', () => {
-    test('Username provided is at least 6 characters', async() => {
+    test('Username provided is at least 5 characters', async() => {
         await expect(register('noway', 'password', 'password', 'test', 'revature way')).rejects.toThrow(LengthValidationError);
     });
 
-    test('Password Provided is at least 6 characters', async() => {
+    test('Password Provided is at least 5 characters', async() => {
         await expect(register('testuser', 'pass', 'pass', 'test', 'revature way')).rejects.toThrow(LengthValidationError);
     });
 

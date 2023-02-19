@@ -1,12 +1,21 @@
-const { showProducts, showProduct } = require('../service/product-service');
-const { getAllProducts, getProductById } = require('../dao/products-dao');
+const { showProducts, showProduct, addProduct } = require('../service/product-service');
+const { getAllProducts, getProductById, putProduct } = require('../dao/products-dao');
+const { s3Upload } = require('../s3/products-s3');
 const NoProductsError = require('../errors/no-products-error');
 const InvalidProductError = require('../errors/invalid-product-error');
+const InvalidProductInfoError = require('../errors/invalid-product-info-error');
 
 jest.mock('../dao/products-dao', function () {
   return {
     getAllProducts: jest.fn(),
     getProductById: jest.fn(),
+    putProduct: jest.fn(),
+  };
+});
+
+jest.mock('../s3/products-s3', function () {
+  return {
+    s3Upload: jest.fn(),
   };
 });
 
@@ -65,7 +74,7 @@ describe('Products view tests', () => {
   });
 });
 
-describe('Singe product view', () => {
+describe('Singe product view tests', () => {
   test('Product does not exist', async () => {
     getProductById.mockReturnValueOnce(Promise.resolve({}));
 
@@ -97,5 +106,81 @@ describe('Singe product view', () => {
       name: 'Microsoft Surface Laptop Go 12.4"',
       product_id: '12345',
     });
+  });
+});
+
+describe('Add Product tests', () => {
+  test('Invalid description', async () => {
+    const file = {
+      fieldname: 'image',
+      originalname: '818vEGdvS+S._AC_SX679_.jpg',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      size: 68403,
+    };
+    await expect(addProduct(file, ' ', 'anyName', 100, 10)).rejects.toThrow(
+      InvalidProductInfoError
+    );
+  });
+
+  test('Invalid name', async () => {
+    const file = {
+      fieldname: 'image',
+      originalname: '818vEGdvS+S._AC_SX679_.jpg',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      size: 68403,
+    };
+    await expect(addProduct(file, 'description', '', 100, 10)).rejects.toThrow(
+      InvalidProductInfoError
+    );
+  });
+
+  test('Invalid file', async () => {
+    const file = '';
+    await expect(addProduct(file, 'description', 'anyName', 100, 10)).rejects.toThrow(
+      InvalidProductInfoError
+    );
+  });
+
+  test('Invalid price', async () => {
+    const file = {
+      fieldname: 'image',
+      originalname: '818vEGdvS+S._AC_SX679_.jpg',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      size: 68403,
+    };
+    await expect(addProduct(file, 'description', 'anyName', 0, 10)).rejects.toThrow(
+      InvalidProductInfoError
+    );
+  });
+
+  test('Invalid quantity', async () => {
+    const file = {
+      fieldname: 'image',
+      originalname: '818vEGdvS+S._AC_SX679_.jpg',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      size: 68403,
+    };
+    await expect(addProduct(file, 'description', 'anyName', 100, -1)).rejects.toThrow(
+      InvalidProductInfoError
+    );
+  });
+
+  test('Product added succesfully', async () => {
+    const file = {
+      fieldname: 'image',
+      originalname: '818vEGdvS+S._AC_SX679_.jpg',
+      encoding: '7bit',
+      mimetype: 'image/jpeg',
+      size: 68403,
+    };
+
+    s3Upload.mockReturnValueOnce(Promise.resolve({}));
+    putProduct.mockReturnValueOnce(Promise.resolve({}));
+
+    await expect(addProduct(file, 'description', 'anyName', 100, 10)).toMatchObject({});
   });
 });

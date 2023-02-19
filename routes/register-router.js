@@ -17,14 +17,31 @@ router.post('/', async (req, res) => {
         "message": "Successfully Registered"
     });
     } catch (err) {
-        if (err.name === 'LengthValidationError' || err.name === 'UsernameExistsError' || err.name === 'PasswordMatchingError' || err.name === 'NoInputError') {
+        if (err.name === 'LengthValidationError') {
+            res.statusCode = 411;
+            return res.send({
+                "message": err.message
+            })};
+        if (err.name === 'UsernameExistsError') {
+            res.statusCode = 409;
+            return res.send({
+                "message": err.message
+            })};
+        if (err.name === 'PasswordMatchingError') {
+            res.statusCode = 412;
+            return res.send({
+                "message": err.message
+            })};
+        if (err.name === 'NoInputError') {
             res.statusCode = 400;
-        }else{
+            res.send({
+                "message": err.message
+        })}
+        else {
             res.statusCode = 500;
-        }
-        return res.send({
+            res.send({
             "message": err.message
-        });
+        })};
     }
 });
 

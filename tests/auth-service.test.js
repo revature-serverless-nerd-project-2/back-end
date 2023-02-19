@@ -3,6 +3,7 @@ const { getUserByUsername } = require('../dao/users-dao');
 const InvalidUsernameError = require('../errors/invalid-username-error');
 const InvalidPasswordError = require('../errors/invalid-password-error');
 const NoInputError = require('../errors/no-input-error');
+const bcrypt = require('bcrypt');
 
 jest.mock('../dao/users-dao', function () {
   return {
@@ -42,10 +43,12 @@ describe('Login tests', () => {
   });
 
   test('No errors, successful login', async () => {
+    const hashedPassword = await bcrypt.hash('123456', 10);
+
     getUserByUsername.mockReturnValueOnce(
       Promise.resolve({
         Item: {
-          password: '12345',
+          password: hashedPassword,
           username: 'customer1',
           address: '123 street',
           role: 'user',
@@ -54,9 +57,9 @@ describe('Login tests', () => {
       })
     );
 
-    const user = await login('customer1', '12345');
+    const user = await login('customer1', '123456');
     expect(user).toMatchObject({
-      password: '12345',
+      password: hashedPassword,
       username: 'customer1',
       address: '123 street',
       role: 'user',

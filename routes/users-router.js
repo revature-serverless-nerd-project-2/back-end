@@ -47,7 +47,7 @@ router.patch('/:name', async (req, res) => {
 
 
 // Create PATCH /profile address
-router.patch('/:address', async (req, res) => {
+router.patch('/address/:address', async (req, res) => {
     try {
         const data = await getUsernameFromToken(req);
         const newAddress = req.body.address;

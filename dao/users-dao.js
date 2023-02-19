@@ -36,6 +36,7 @@ const updateAddress = (username, address) => {
     }
   }
 
+  console.log(address)
   return docClient.update(params).promise();
 };
 

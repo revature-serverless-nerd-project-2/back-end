@@ -2,15 +2,31 @@ const express = require('express');
 const cartRouter = express.Router();
 const { showCart, placeInCart} = require('../service/cart-service');
 const router = require('./auth-router');
+const { v4: uuidv4 } = require('uuid');
 
 //this will route to show the cart page where it will display all the items of the user's cart
 router.get('/carts', async (req, res)  => {
-    const user = req.query.username;
+    let user = req.query.username;
     try{
+        if(!user){
+            user = uuidv4();
+        }
         const data = await showCart(user);
-        const cart = data.Item.products;
-        res.status(200);
-        res.send(cart);
+        if(data.Item){ 
+            const cart = data.Item.products;
+            console.log(data.user);
+            if(cart){
+                res.status(200);
+                res.send(cart);
+            } else {
+                res.status(200);
+                res.send('No Items in Cart');
+            }
+        } else {
+            res.status(200);
+            res.send('No Items in Cart');
+        }
+        
     } catch(error){
         console.log(error);
         res.status(500);
@@ -24,11 +40,15 @@ router.patch('/newitems', async (req, res) => {
     const img = req.body.imageURL;
     const name = req.body.name;
     const price = req.body.price
-    const user = req.body.username;
+    let user = req.body.username;
     try{
+        if(!user){
+            user = uuidv4();
+        }
         const item = await placeInCart(id, desc, img, name, price, user);
         if(item){
             res.status(200);
+            res.write(user);
             res.send(item.data);
         }
     } catch(error){

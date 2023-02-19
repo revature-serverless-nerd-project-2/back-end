@@ -2,11 +2,7 @@ const { retrieveCart, addToCart } = require('../dao/cart-dao');
 
 async function showCart(username){
     const data = await retrieveCart(username);
-    if(data.length == 0){
-        return ('Empty Cart');
-    } else {
-        return data;
-    }
+    return data;
 }
 
 async function placeInCart(product_id, description, imageURL, name, price, username){

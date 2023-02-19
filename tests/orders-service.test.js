@@ -1,5 +1,5 @@
 const {checkout} = require('../SERVICE/orders-service');
-const {retrieveCartItems} = require('../DAO/cart');
+const {retrieveCartItems} = require('../dao/cart-dao');
 const {addOrders} = require('../DAO/orders');
 const NoCartItemsToCheckoutError = require('../ERRORS/no-items-to-checkout-error');
 

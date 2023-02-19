@@ -15,10 +15,6 @@ function addUser(username, address, password, name, role) {
             "name": name,
             "password": password,
             "role": "Customer" //Hardcoding customer role since you can't choose to be an admin.
-        },
-        ConditionExpression: 'attribute_not_exists(#u)',
-        ExpressionAttributeName:{
-            "#u": "username"
         }
     }
     return documentClient.put(params).promise();

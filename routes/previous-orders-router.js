@@ -27,7 +27,8 @@ router.get('/', async (req, res) => {
         };   */
     
     try{
-        const orders = await viewOrders(req.params.username); 
+        const username = req.body.username;
+        const orders = await viewOrders(username); 
         res.status(200).json(orders);
     } catch (error) {
         if(error.name === 'NoOrdersError') {
@@ -36,9 +37,11 @@ router.get('/', async (req, res) => {
                 "message": 'No previous orders for this account'
             });
         } else {
+            console.log(error);
             res.statusCode = 400;
             res.send({
-                "message": err.message
+                
+                //"message": err.message
             });
         };
     };

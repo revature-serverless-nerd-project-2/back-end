@@ -18,8 +18,9 @@ router.post('/orders', async(req, res) => {
         const City = req.body.City;
         const State = req.body.State;
         const Zip = req.body.Zip;
+        const username = req.body.username;
 
-        await checkout(Firstname, Lastname, Email, Address, Address2, City, State, Zip);
+        await checkout(Firstname, Lastname, username, Email, Address, Address2, City, State, Zip);
        
         res.statusCode = 201;
                 return res.send({
@@ -30,6 +31,7 @@ router.post('/orders', async(req, res) => {
         if (err.name === 'NoCartItemsToCheckoutError' || err.name === 'NoProductsError') {
             res.statusCode = 400;
         } else {
+            console.log(err);
             res.statusCode = 500;
         }
     res.send({

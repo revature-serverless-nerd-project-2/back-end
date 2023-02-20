@@ -36,20 +36,18 @@ const getProductById = (id) => {
   return docClient.get(params).promise();
 };
 
-
-function reduceInventory(id, quantity){
+function reduceInventory(id, quantity) {
   const params = {
-      TableName: 'Products',
-      Key: {
-          product_id: id,
-      },
-      UpdateExpression: 'SET #q = :val',
-      ExpressionAttributeNames: {
-          '#q': "quantity"
-      },
-      ExpressionAttributeValues: 
-      {':val': quantity}
-  }
+    TableName: 'Products',
+    Key: {
+      product_id: id,
+    },
+    UpdateExpression: 'SET #q = :val',
+    ExpressionAttributeNames: {
+      '#q': 'quantity',
+    },
+    ExpressionAttributeValues: { ':val': quantity },
+  };
 
   return docClient.update(params).promise();
 }
@@ -71,7 +69,6 @@ const putProduct = (desc, imageUrl, name, price, quantity) => {
   return docClient.put(params).promise();
 };
 
-
 module.exports = {
   getAllProducts,
   getProductById,
@@ -79,5 +76,4 @@ module.exports = {
   reduceInventory,
 
   putProduct,
-
 };

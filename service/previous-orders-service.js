@@ -6,6 +6,8 @@ const { showProduct } = require('./product-service');
 
 async function viewOrders(username) {
     const data = await getPreviousOrders(username);
+
+    
     
 
     if(!data) {
@@ -17,17 +19,20 @@ async function viewOrders(username) {
     for(let i = 0; i < result.length; i++){
         const order = {};
         order.timestamp = result[i].timestamp;
-        for(let j = 0; j < result[i].order_summary.products.length; j++){
+        for(let j = 0; j < result[i].order_summary.length; j++){
             let key = {key:'', item:''};
-            let id = result[i].order_summary.products[j].product_id;
+            let id = result[i].order_summary[j].product_id;
             key.key = i.toString() + ','+ j.toString();
             key.item = await showProduct(id);
-            order.products = {key};            
+            order.product = {key}
+            orderList.push(order); 
+                      
         }
-        orderList.push(order);
-    };
-
+        
+    }
+console.log(orderList); 
     return orderList;
+    
 };
 
 module.exports = {

@@ -1,7 +1,7 @@
 const {createJWT, verifyTokenAndPayload} = require('../util/jwt-util');
 const {addOrders} = require('../dao/orders.js');
 const {retrieveCart} = require('../dao/cart-dao');
-const {deleteProductByID} = require('../dao/products-dao');
+const {getProductById, reduceInventory} = require('../dao/products-dao');
 const NoCartItemsToCheckoutError = require('../errors/no-items-to-checkout-error');
 const uuid = require('uuid');
 

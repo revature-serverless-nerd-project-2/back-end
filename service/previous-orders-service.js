@@ -19,21 +19,18 @@ async function viewOrders(username) {
     for(let i = 0; i < result.length; i++){
         const order = {};
         order.timestamp = result[i].timestamp;
-        let keyList = [];
         for(let j = 0; j < result[i].order_summary.length; j++){
             let key = {key:'', item:''};
             let id = result[i].order_summary[j].product_id;
             key.key = i.toString() + ','+ j.toString();
             key.item = await showProduct(id);
-            keyList.push(key);
-            order.products = {keyList}; 
-            console.log(order);           
+            order.product = {key}
+            orderList.push(order); 
+                      
         }
         
-        console.log(orderList);
-        orderList.push(order);
     }
-
+console.log(orderList); 
     return orderList;
     
 };

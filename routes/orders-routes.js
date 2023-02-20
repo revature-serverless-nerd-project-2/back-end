@@ -10,7 +10,6 @@ router.post('/orders', async(req, res) => {
     try {
         // const token = req.headers.authorization.split(' ')[1];
         // const payload = await verifyTokenAndReturnPayload(token);
-        const username = req.body.username;
         const Firstname = req.body.Firstname;
         const Lastname = req.body.Lastname;
         const Email = req.body.Email;
@@ -20,7 +19,7 @@ router.post('/orders', async(req, res) => {
         const State = req.body.State;
         const Zip = req.body.Zip;
 
-        await checkout(username, Firstname, Lastname, Email, Address, Address2, City, State, Zip);
+        await checkout(Firstname, Lastname, Email, Address, Address2, City, State, Zip);
        
         res.statusCode = 201;
                 return res.send({

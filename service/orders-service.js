@@ -10,7 +10,7 @@ const timestamp = require('unix-timestamp');
 
 timestamp.round = true
 
-async function checkout(username, Firstname, Lastname, Email, Address, Address2, City, State, Zip) {
+async function checkout(Firstname, Lastname, Email, Address, Address2, City, State, Zip) {
     
     const data = await retrieveCart(username);
    

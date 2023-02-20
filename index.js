@@ -10,6 +10,8 @@ const productsRouter = require('./routes/products-router');
 const cartRouter = require('./routes/cart-router');
 const registerRouter = require('./routes/register-router');
 const orderHistoryRouter = require('./routes/previous-orders-router');
+// Adding userRouter
+const userRouter = require('./ROUTES/users-router');
 const loggingMiddleware = require('./middleware/logger');
 
 app.use(cors({ origin: '*' }));
@@ -29,6 +31,7 @@ app.use('/removals', cartRouter);
 app.use('/register', registerRouter);
 app.use('/previous-orders', orderHistoryRouter);
 app.use('/orders', ordersRouter);
+app.use('/profile', userRouter)
 
 app.listen(PORT, () => {
   console.log(`Listening on PORT ${PORT}`);

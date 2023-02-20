@@ -5,7 +5,7 @@ const jwtUtil = require('../util/jwt-util');
 
 router.get('/', async (req, res) => {
  
-    if(req.headers.authorization) {;
+    if(req.headers.authorization) {
         const token = req.headers.authorization.split(" ")[1];
         try{
             const payload = await jwtUtil.verifyTokenAndPayload(token);

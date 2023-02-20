@@ -12,10 +12,7 @@ async function checkout(username, Firstname, Lastname, Email, Address, Address2,
     
    const data = await retrieveCart(username);
    const userItems = data.Item.products;
-   console.log(userItems)
-   
-   
-   
+    
    if(!userItems){
        
     

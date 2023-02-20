@@ -56,7 +56,6 @@ function retrieveCart(username){
 
 module.exports = {
     addToCart,
-    removeFromCart,
     removeCart,
     retrieveCart
 };

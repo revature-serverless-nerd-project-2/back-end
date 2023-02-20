@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - npm install
+  build:
+    commands:
+      - docker build -t 746012514523.dkr.ecr.us-east-2.amazonaws.com/e-commerce-backend:latest .
+  post_build:
+    commands:
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 746012514523.dkr.ecr.us-east-2.amazonaws.com
+      - docker push 746012514523.dkr.ecr.us-east-2.amazonaws.com/e-commerce-backend:latest
+
+artifacts:
+  files:
+    - appspec.yml
+    - scripts/**/*

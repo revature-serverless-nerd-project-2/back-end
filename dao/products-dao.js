@@ -72,6 +72,8 @@ const putProduct = (desc, imageUrl, name, price, quantity) => {
 module.exports = {
   getAllProducts,
   getProductById,
+
   reduceInventory,
+
   putProduct,
 };

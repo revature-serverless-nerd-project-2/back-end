@@ -58,8 +58,7 @@ router.patch('/newitems', async (req, res) => {
 })
 
 router.delete('/removals', async (req, res) => {
-    const user = req.body.username;
-
+    const user = req.query.username;
     try{
         await removeUserCart(user);
         res.status(200);

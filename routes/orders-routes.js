@@ -28,7 +28,7 @@ router.post('/orders', async(req, res) => {
                 })
    
     } catch(err){
-        if (err.name === 'NoCartItemsToCheckoutError') {
+        if (err.name === 'NoCartItemsToCheckoutError' || err.name === 'NoProductsError') {
             res.statusCode = 400;
         } else {
             res.statusCode = 500;
